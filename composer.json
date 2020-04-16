@@ -1,0 +1,18 @@
+{
+    "description": "",
+    "type": "neos-plugin",
+    "name": "mireo91/xlfeditor",
+    "require": {
+        "neos/flow": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mireo\\XlfEditor\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "Mireo.XlfEditor"
+        }
+    }
+}
