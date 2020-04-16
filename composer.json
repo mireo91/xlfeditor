@@ -10,7 +10,6 @@
             "Mireo\\XlfEditor\\": "Classes/"
         }
     },
-
     "extra": {
         "neos": {
             "package-key": "Mireo.XlfEditor"
