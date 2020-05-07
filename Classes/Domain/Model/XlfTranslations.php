@@ -17,24 +17,15 @@ class XlfTranslations
      * @var string
      * @ORM\Column(length=32)
      */
-    protected $pathHash;
+    protected $path;
 
     /**
      * Absolute path of this node
      *
      * @var string
-     * @ORM\Column(length=4000)
-     * @Flow\Validate(type="StringLength", options={ "minimum"=1, "maximum"=4000 })
+     * @ORM\Column(type="flow_json_array")
+     * @var array<string>
      */
-    protected $path;
+    protected $translations = [];
 
-    /**
-     * MD5 hash of the parent path
-     * This property is needed to speed up lookup by parent path.
-     * The hash is generated in calculateParentPathHash().
-     *
-     * @var string
-     * @ORM\Column(length=32)
-     */
-    protected $parentPathHash;
 }
