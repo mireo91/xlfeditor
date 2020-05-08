@@ -14,22 +14,31 @@ prototype(Mireo.XlfEditor:Module.Index) < prototype(Neos.Fusion:Component) {
     renderer = afx`
         <div class="neos-content neos-container-fluid">
             <div class="neos-row-fluid">
-                <table class="neos-table">
-                    <thead>
-                        <tr>
-                            <td>Key</td>
-                            <Neos.Fusion:Loop items={props.languages}>
-                                <td>{itemKey}</td>
-                            </Neos.Fusion:Loop>
-                            <td>Actions</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <Neos.Fusion:Loop items={translationKeys}>
-                            <Mireo.XlfEditor:Component.ListItem translationKey={item} languages={props.languages} />
+                <Neos.Fusion:Loop items={translationKeys}>
+                    <div class="pakage-key">
+                        {itemKey}
+                        <Neos.Fusion:Loop items={item}>
+                            <span class="file-path">->{itemKey}</span>
+                            <br/>
+                            <table class="neos-table">
+                                <thead>
+                                <tr>
+                                    <td>Key</td>
+                                    <Neos.Fusion:Loop items={props.languages}>
+                                        <td>{itemKey}</td>
+                                    </Neos.Fusion:Loop>
+<!--                                    <td>Actions</td>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <Neos.Fusion:Loop items={item}>
+                                    <Mireo.XlfEditor:Component.ListItem translationKey={item.originalKey} label={item.label} languages={props.languages} />
+                                </Neos.Fusion:Loop>
+                                </tbody>
+                            </table>
                         </Neos.Fusion:Loop>
-                    </tbody>
-                </table>
+                    </div>
+                </Neos.Fusion:Loop>
 <!--                <Neos.RedirectHandler.Ui:Component.Redirect.List-->
 <!--                        redirectsJson={props.redirectsJson}-->
 <!--                        hostOptions={props.hostOptions}-->
@@ -54,11 +63,12 @@ prototype(Mireo.XlfEditor:Component.ListItem) < prototype(Neos.Fusion:Component)
     package = ${this.translationKeyExploded[0]}
     source = ${this.translationKeyExploded[1]}
     key = ${this.translationKeyExploded[2]}
+    label = ''
 
     renderer = afx`
         <tr>
             <td>
-                {props.key}
+                {props.label}
             </td>
 
                 <Neos.Fusion:Loop items={props.languages}>
@@ -68,11 +78,11 @@ prototype(Mireo.XlfEditor:Component.ListItem) < prototype(Neos.Fusion:Component)
                 </td>
                 </Neos.Fusion:Loop>
 
-            <td class="neos-action">
-                <button type="button" class="neos-button" title="Save">
-                    <i class="fas fa-check"></i>
-                </button>
-            </td>
+<!--            <td class="neos-action">-->
+<!--                <button type="button" class="neos-button" title="Save">-->
+<!--                    <i class="fas fa-check"></i>-->
+<!--                </button>-->
+<!--            </td>-->
         </tr>
     `
 }

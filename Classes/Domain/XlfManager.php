@@ -46,7 +46,11 @@ class XlfManager{
      */
     protected $xliffReader;
 
-    public function getFiles(){
+    /**
+     * @param $tabName
+     * @return array
+     */
+    public function getFiles($tabName){
 
         $data = [];
         $xliffBasePath = 'Private/Translations/';
@@ -55,9 +59,10 @@ class XlfManager{
             $translationPath = $package->getResourcesPath() . $xliffBasePath . $this->defaultLanguage;
             if (is_dir($translationPath)) {
                 foreach(Files::readDirectoryRecursively($translationPath) as $path){
-                    foreach( $this->configuration['matcher'] as $regex ){
+                    foreach( $this->configuration['tabs'][$tabName]['matcher'] as $regex ){
                         if( preg_match($regex, $path) ){
-                            $data[] = $package->getPackageKey().":".str_replace($translationPath.'/', '', substr($path,0,-4));
+                            $key = $package->getPackageKey().":".str_replace($translationPath.'/', '', substr($path,0,-4));
+                            $data[] = $key ;
                         }
                     }
                 }
@@ -67,19 +72,30 @@ class XlfManager{
         return $data;
     }
 
-    public function getAllKeys(){
-        $keys = $this->cache->get('configuration')??[];
+    public function getAllKeys( $tabName = null ){
+        if(!$tabName){
+            $tabName = $this->configuration['defaultTab'];
+        }
+        $keys = $this->cache->get('configuration_'.$tabName)??[];
         if( !$keys ) {
-            $files = $this->getFiles();
+            $keyMatcherObjectName = $this->configuration['tabs'][$tabName]['keyMatcherObjectName']??'Mireo\XlfEditor\TranslationMapper\ValidationMapper';
+            $matcherObject = new $keyMatcherObjectName;
+            $files = $this->getFiles($tabName);
             foreach ($files as $path) {
+                $explodedPath = explode(":", $path);
                 $value = $this->xliffFileProvider->getMergedFileData($path, new Locale($this->defaultLanguage));
                 if ($value['translationUnits']) {
                     foreach (array_keys($value['translationUnits']) as $v) {
-                        $keys[] = $path . ":" . $v;
+                        $key = $path . ":" . $v;
+                        $label = $matcherObject->mapTo($key);
+                        $keys[$explodedPath[0]][$explodedPath[1]][] = [
+                            'originalKey' => $key,
+                            'label' => $label
+                        ];
                     }
                 }
             }
-            $this->cache->set('configuration', $keys);
+            $this->cache->set('configuration_'.$tabName, $keys);
         }
         return $keys;
     }

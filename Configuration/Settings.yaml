@@ -3,10 +3,13 @@ Mireo:
     configuration:
 #      default:
 #      label: 'Default'
-      matcher:
-#        - /.*/
-        - /ValidationErrors.xlf/
-#        - /Components\/Teaser.xlf/
+      defaultTab: default
+      tabs:
+        default:
+          keyMatcherObjectName: Mireo\XlfEditor\TranslationMapper\ValidationMapper
+          matcher:
+#            - /.*/
+            - /ValidationErrors.xlf/
 Neos:
   Neos:
     userInterface:
@@ -23,8 +26,8 @@ Neos:
             icon: 'fas fa-language'
             resource: 'Mireo.XlfEditor:Backend.Module'
             privilegeTarget: 'Mireo.XlfEditor:Module'
-            additionalResources:
-              styleSheets:
-                - 'resource://Neos.RedirectHandler.Ui/Public/Assets/main.bundle.css'
-              javaScripts:
-                - 'resource://Neos.RedirectHandler.Ui/Public/Assets/main.bundle.js'
+#            additionalResources:
+#              styleSheets:
+#                - 'resource://Neos.RedirectHandler.Ui/Public/Assets/main.bundle.css'
+#              javaScripts:
+#                - 'resource://Neos.RedirectHandler.Ui/Public/Assets/main.bundle.js'
