@@ -1,0 +1,78 @@
+prototype(Mireo.XlfEditor:Module.Index) < prototype(Neos.Fusion:Component) {
+//    redirectsJson = '[]'
+//    hostOptions = '[]'
+    csrfToken = ''
+
+//    importAction = Neos.Fusion:UriBuilder {
+//        action = 'import'
+//    }
+//    exportAction = Neos.Fusion:UriBuilder {
+//        action = 'export'
+//    }
+    languages = ${Array.shift(Configuration.setting('Neos.ContentRepository.contentDimensions.language.presets'))}
+
+    renderer = afx`
+        <div class="neos-content neos-container-fluid">
+            <div class="neos-row-fluid">
+                <table class="neos-table">
+                    <thead>
+                        <tr>
+                            <td>Key</td>
+                            <Neos.Fusion:Loop items={props.languages}>
+                                <td>{itemKey}</td>
+                            </Neos.Fusion:Loop>
+                            <td>Actions</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <Neos.Fusion:Loop items={translationKeys}>
+                            <Mireo.XlfEditor:Component.ListItem translationKey={item} languages={props.languages} />
+                        </Neos.Fusion:Loop>
+                    </tbody>
+                </table>
+<!--                <Neos.RedirectHandler.Ui:Component.Redirect.List-->
+<!--                        redirectsJson={props.redirectsJson}-->
+<!--                        hostOptions={props.hostOptions}-->
+<!--                        csrfToken={props.csrfToken}/>-->
+            </div>
+
+            <div class="neos-footer">
+<!--                <a class="neos-button neos-button-success" href={props.exportAction}>-->
+<!--                    {I18n.translate('Neos.RedirectHandler.Ui:Modules:action.export')}-->
+<!--                </a>-->
+<!--                <a class="neos-button neos-button-danger" href={props.importAction}>-->
+<!--                    {I18n.translate('Neos.RedirectHandler.Ui:Modules:action.import')}-->
+<!--                </a>-->
+            </div>
+        </div>
+    `
+}
+
+prototype(Mireo.XlfEditor:Component.ListItem) < prototype(Neos.Fusion:Component){
+    translationKey = ''
+    translationKeyExploded = ${String.split(this.translationKey, ":")}
+    package = ${this.translationKeyExploded[0]}
+    source = ${this.translationKeyExploded[1]}
+    key = ${this.translationKeyExploded[2]}
+
+    renderer = afx`
+        <tr>
+            <td>
+                {props.key}
+            </td>
+
+                <Neos.Fusion:Loop items={props.languages}>
+                <td>
+<!--                    <label class="neos-control-label" for={"translation-"+props.translationKey+"-"+itemKey}>{itemKey}</label>-->
+                    <input class="neos-span12" name={props.translationKey} id={"translation-"+props.translationKey+"-"+itemKey} type="text" placeholder="No translation" value={Translation.translate(props.key, null,[],props.source,props.package, null, itemKey)} />
+                </td>
+                </Neos.Fusion:Loop>
+
+            <td class="neos-action">
+                <button type="button" class="neos-button" title="Save">
+                    <i class="fas fa-check"></i>
+                </button>
+            </td>
+        </tr>
+    `
+}

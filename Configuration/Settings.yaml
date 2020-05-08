@@ -1,0 +1,30 @@
+Mireo:
+  XlfEditor:
+    configuration:
+#      default:
+#      label: 'Default'
+      matcher:
+#        - /.*/
+        - /ValidationErrors.xlf/
+#        - /Components\/Teaser.xlf/
+Neos:
+  Neos:
+    userInterface:
+      translation:
+        autoInclude:
+          'Mireo.XlfEditor': ['Modules']
+    modules:
+      management:
+        submodules:
+          translations:
+            label: 'Mireo.XlfEditor:Modules:module.label'
+            controller: '\Mireo\XlfEditor\Controller\TranslationsController'
+            description: 'Neos.RedirectHandler.Ui:Modules:module.description'
+            icon: 'fas fa-language'
+            resource: 'Mireo.XlfEditor:Backend.Module'
+            privilegeTarget: 'Mireo.XlfEditor:Module'
+            additionalResources:
+              styleSheets:
+                - 'resource://Neos.RedirectHandler.Ui/Public/Assets/main.bundle.css'
+              javaScripts:
+                - 'resource://Neos.RedirectHandler.Ui/Public/Assets/main.bundle.js'

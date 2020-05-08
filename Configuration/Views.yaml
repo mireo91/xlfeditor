@@ -1,0 +1,6 @@
+-
+  requestFilter: 'isPackage("Mireo.XlfEditor") && isController("Translations") && isFormat("html")'
+  viewObjectName: 'Neos\Fusion\View\FusionView'
+  options:
+    fusionPathPatterns:
+      - 'resource://Mireo.XlfEditor/Private/FusionModule'

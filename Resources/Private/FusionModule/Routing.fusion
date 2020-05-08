@@ -1,0 +1,21 @@
+Mireo.XlfEditor.TranslationsController {
+    index = afx`
+        <Mireo.XlfEditor:Module.Index csrfToken={csrfToken} />
+        <Mireo.XlfEditor:Component.FlashMessages flashMessages={flashMessages}/>
+    `
+
+    import = afx`
+        <Neos.RedirectHandler.Ui:Module.Import csrfToken={csrfToken}/>
+        <Neos.RedirectHandler.Ui:Component.FlashMessages flashMessages={flashMessages}/>
+    `
+
+    importCsv = afx`
+        <Neos.RedirectHandler.Ui:Module.ImportCsv protocol={protocol}/>
+        <Neos.RedirectHandler.Ui:Component.FlashMessages flashMessages={flashMessages}/>
+    `
+
+    export = afx`
+        <Neos.RedirectHandler.Ui:Module.Export csrfToken={csrfToken}/>
+        <Neos.RedirectHandler.Ui:Component.FlashMessages flashMessages={flashMessages}/>
+    `
+}
